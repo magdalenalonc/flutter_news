@@ -39,4 +39,20 @@ class NewsDbProvider {
       },
     );
   }
+
+  fetchItem(int id) async {
+    final maps = await db.query(
+      "Items",
+      columns:
+          null, // could be e.g. ["title"], but here we want to fetch only an Item. Null returns all columns
+      where: "id = ?", // '?' will be replaced with 'id' from [whereArgs]
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return ItemModel.fromDb(maps.first);
+    }
+
+    return null;
+  }
 }
