@@ -16,7 +16,27 @@ class NewsDbProvider {
     db = await openDatabase(
       path,
       version: 1,
-      onCreate: (Database newDb, int version) {},
+      onCreate: (Database newDb, int version) {
+        // remember that SQL types are not always the same as Dart types, so we have to do some conversions
+        newDb.execute("""
+          CREATE TABLE Items
+            (
+              id INTEGER PRIMARY KEY,
+              type TEXT,
+              by TEXT,
+              time INTEGER,
+              text TEXT,
+              parent INTEGER,
+              kids BLOB,
+              dead INTEGER,
+              deleted INTEGER,
+              url TEXT,
+              score INTEGER,
+              title TEXT,
+              descendants INTEGER
+            )
+        """);
+      },
     );
   }
 }
