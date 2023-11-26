@@ -15,7 +15,7 @@ class ItemModel {
   final String? title;
   final int? descendants;
 
-  // named constructor to receive information from API 
+  // named constructor to receive information from API
   ItemModel.fromJson(Map<String, dynamic> parsedJson)
       : id = parsedJson['id'],
         deleted = parsedJson['deleted'],
@@ -46,4 +46,23 @@ class ItemModel {
         score = parsedJson['score'],
         title = parsedJson['title'],
         descendants = parsedJson['descendants'];
+
+  // method needed to add an item do the database
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "id": id,
+      "type": type,
+      "by": by,
+      "time": time,
+      "text": text,
+      "parent": parent,
+      "url": url,
+      "score": score,
+      "title": title,
+      "descendants": descendants,
+      "dead": dead! ? 1 : 0,
+      "deleted": deleted! ? 1 : 0,
+      "kids": jsonEncode(kids)
+    };
+  }
 }
