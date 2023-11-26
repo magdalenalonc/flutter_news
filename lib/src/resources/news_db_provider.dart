@@ -11,7 +11,7 @@ class NewsDbProvider {
   late Database db;
 
   // do initial database setup
-  init() async {
+  void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, "items.db");
     db = await openDatabase(
@@ -42,7 +42,7 @@ class NewsDbProvider {
   }
 
   // given an ID, return an individual item
-  fetchItem(int id) async {
+  Future<ItemModel?> fetchItem(int id) async {
     final maps = await db.query(
       "Items",
       columns:
@@ -59,7 +59,7 @@ class NewsDbProvider {
   }
 
   // insert an item into the database
-  addItem(ItemModel item) {
+  Future<int> addItem(ItemModel item) {
     return db.insert(
       "Items",
       item.toMap(),

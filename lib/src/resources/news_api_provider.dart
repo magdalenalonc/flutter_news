@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:async';
+
 import 'package:http/http.dart'
     show
         Client; // -> 'Client' - maintaining persistent connections across multiple requests to the same server. Then we can use MockClient in testing.
@@ -10,7 +12,7 @@ const _root = 'https://hacker-news.firebaseio.com/v0';
 class NewsApiProvider {
   Client client = Client();
 
-  fetchTopIds() async {
+  Future<List<int>> fetchTopIds() async {
     final response = await client.get(
       Uri.parse('$_root/topstories.json'),
     );
@@ -20,7 +22,7 @@ class NewsApiProvider {
     return ids;
   }
 
-  fetchItem(int id) async {
+  Future<ItemModel> fetchItem(int id) async {
     final response = await client.get(
       Uri.parse('$_root/item/$id.json'),
     );
