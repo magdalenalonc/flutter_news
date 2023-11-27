@@ -6,9 +6,16 @@ import 'package:path_provider/path_provider.dart'; // -> getApplicationDocuments
 import 'package:path/path.dart'; // -> join() method
 
 import '../models/item_model.dart';
+import 'repository.dart';
 
-class NewsDbProvider {
+class NewsDbProvider implements Source {
   late Database db;
+
+  // Todo - store and fetch top ids
+  @override
+  Future<List<int>>? fetchTopIds() {
+    return null;
+  }
 
   // do initial database setup
   void init() async {
@@ -42,6 +49,7 @@ class NewsDbProvider {
   }
 
   // given an ID, return an individual item
+  @override
   Future<ItemModel?> fetchItem(int id) async {
     final maps = await db.query(
       "Items",
