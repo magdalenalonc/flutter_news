@@ -8,7 +8,7 @@ import 'package:path/path.dart'; // -> join() method
 import '../models/item_model.dart';
 import 'repository.dart';
 
-class NewsDbProvider implements Source {
+class NewsDbProvider implements Source, Cache {
   late Database db;
 
   // Todo - store and fetch top ids
@@ -67,6 +67,7 @@ class NewsDbProvider implements Source {
   }
 
   // insert an item into the database
+  @override
   Future<int> addItem(ItemModel item) {
     return db.insert(
       "Items",
