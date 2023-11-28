@@ -5,10 +5,31 @@ import '../blocs/stories_provider.dart';
 class NewsList extends StatelessWidget {
   const NewsList({super.key});
 
+  Widget buildList(StoriesBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.topIds,
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (!snapshot.hasData) {
+          return const Text('Still waiting on Ids');
+        }
+
+        return ListView.builder(
+          itemCount: snapshot.data!.length,
+          itemBuilder: (context, index) {
+            return Text('${snapshot.data![index]}');
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = StoriesProvider.of(context);
-    
+
+    // THIS IS BAD!!! NORMALLY DON'T DO THIS. TEMPORARY SOLUTION.
+    bloc.fetchTopIds();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -16,7 +37,7 @@ class NewsList extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge!,
         ),
       ),
-      body: const Text('Show some news here!'),
+      body: buildList(bloc),
     );
   }
 }

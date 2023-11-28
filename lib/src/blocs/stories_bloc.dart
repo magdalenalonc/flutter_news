@@ -12,10 +12,14 @@ class StoriesBloc {
 
   fetchTopIds() async {
     final ids = await _repository.fetchTopIds();
-    _topIds.sink.add(ids!);
+    if (ids != null) {
+      _topIds.sink.add(ids);
+    }
+
+    return null;
   }
 
   dispose() {
-    _topIds;
+    _topIds.close();
   }
 }
