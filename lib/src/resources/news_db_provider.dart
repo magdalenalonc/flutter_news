@@ -8,7 +8,13 @@ import 'package:path/path.dart'; // -> join() method
 import '../models/item_model.dart';
 import 'repository.dart';
 
+final newsDbProvider = NewsDbProvider();
+
 class NewsDbProvider implements Source, Cache {
+  NewsDbProvider() {
+    init();
+  }
+  
   late Database db;
 
   // Todo - store and fetch top ids

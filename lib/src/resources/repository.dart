@@ -5,22 +5,35 @@ import 'news_db_provider.dart';
 import '../models/item_model.dart';
 
 class Repository {
-  NewsDbProvider dbProvider = NewsDbProvider();
-  NewsApiProvider apiProvider = NewsApiProvider();
+  List<Source> sources = <Source>[
+    NewsApiProvider(),
+    newsDbProvider, // we can't do multiple instances of NewsDbProvider() because SQL doens't like this approach to open the same database multiple times. So in NewsDbProvider class we created global 'newsDbProvider' variable for ONLY ONE AND THE SAME database.
+  ];
 
-  Future<List<int>> fetchTopIds() {
-    return apiProvider.fetchTopIds();
+  List<Cache> caches = <Cache>[
+    newsDbProvider,
+  ];
+
+  // Todo - iterate over sources when dbprovider get fetchTopIds implemented
+  Future<List<int>>? fetchTopIds() {
+    return sources[1].fetchTopIds();
   }
 
   Future<ItemModel?> fetchItem(int id) async {
-    var item = await dbProvider.fetchItem(id);
+    ItemModel? item;
 
-    if (item != null) {
-      return item;
+    for (var source in sources) {
+      item = await source.fetchItem(id);
+      if (item != null) {
+        break;
+      }
     }
 
-    item = await apiProvider.fetchItem(id);
-    dbProvider.addItem(item);
+    for (var cache in caches) {
+      if (item != null) {
+        cache.addItem(item);
+      }
+    }
 
     return item;
   }
