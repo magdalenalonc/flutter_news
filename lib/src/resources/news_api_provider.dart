@@ -10,14 +10,13 @@ import 'repository.dart';
 
 const _root = 'https://hacker-news.firebaseio.com/v0';
 
-class NewsApiProvider implements Source{
+class NewsApiProvider implements Source {
   Client client = Client();
+  final _urlTopIds = Uri.parse('$_root/topstories.json');
 
   @override
   Future<List<int>> fetchTopIds() async {
-    final response = await client.get(
-      Uri.parse('$_root/topstories.json'),
-    );
+    final response = await client.get(_urlTopIds);
 
     final ids = json.decode(response.body);
 
