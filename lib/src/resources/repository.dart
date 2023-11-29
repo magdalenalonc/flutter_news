@@ -6,8 +6,8 @@ import '../models/item_model.dart';
 
 class Repository {
   List<Source> sources = <Source>[
-    NewsApiProvider(),
     newsDbProvider, // we can't do multiple instances of NewsDbProvider() because SQL doens't like this approach to open the same database multiple times. So in NewsDbProvider class we created global 'newsDbProvider' variable for ONLY ONE AND THE SAME database.
+    NewsApiProvider(),
   ];
 
   List<Cache> caches = <Cache>[
