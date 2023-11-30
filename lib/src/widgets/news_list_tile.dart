@@ -19,7 +19,16 @@ class NewsListTile extends StatelessWidget {
           return const Text('Stream still loading');
         }
 
-        // TODO - return FutureBuilder
+        return FutureBuilder(
+          future: snapshot.data![itemid],
+          builder: (context, AsyncSnapshot<ItemModel?> itemSnapshot) {
+            if (!itemSnapshot.hasData) {
+              return Text('Still loading item $itemid');
+            }
+
+            return Text(itemSnapshot.data!.title!);
+          },
+        );
       },
     );
   }
