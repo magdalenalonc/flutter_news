@@ -78,6 +78,8 @@ class NewsDbProvider implements Source, Cache {
     return db.insert(
       "Items",
       item.toMap(),
+      // this method tells databse what to do if there's a conflict where it's trying to insert an item with an ID that already exists inside the database:
+      conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
 }

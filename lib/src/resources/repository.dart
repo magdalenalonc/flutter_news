@@ -21,6 +21,7 @@ class Repository {
 
   Future<ItemModel?> fetchItem(int id) async {
     ItemModel? item;
+    var source;
 
     for (var source in sources) {
       item = await source.fetchItem(id);
@@ -30,7 +31,7 @@ class Repository {
     }
 
     for (var cache in caches) {
-      if (item != null) {
+      if (item != null && cache != source) {
         cache.addItem(item);
       }
     }
