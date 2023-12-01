@@ -14,7 +14,7 @@ class NewsDbProvider implements Source, Cache {
   NewsDbProvider() {
     init();
   }
-  
+
   late Database db;
 
   // Todo - store and fetch top ids
@@ -26,7 +26,8 @@ class NewsDbProvider implements Source, Cache {
   // do initial database setup
   void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, "items.db");
+    // to reset current databse we have to change the name of database, e.g. "items.db" to -> "items1.db" - it'll recreate database from scratch
+    final path = join(documentsDirectory.path, "items1.db");
     db = await openDatabase(
       path,
       version: 1,

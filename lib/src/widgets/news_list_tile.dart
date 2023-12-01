@@ -4,9 +4,27 @@ import '../models/item_model.dart';
 import '../blocs/stories_provider.dart';
 
 class NewsListTile extends StatelessWidget {
-  const NewsListTile({super.key, required this.itemid});
+  const NewsListTile({super.key, required this.itemId});
 
-  final int itemid;
+  final int itemId;
+
+  Widget buildTile(ItemModel item) {
+    return Column(
+      children: [
+        ListTile(
+          title: Text(item.title!),
+          subtitle: Text('${item.score} votes'),
+          trailing: Column(
+            children: [
+              const Icon(Icons.comment),
+              Text('${item.descendants}'),
+            ],
+          ),
+        ),
+        const Divider(height: 8.0),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +38,13 @@ class NewsListTile extends StatelessWidget {
         }
 
         return FutureBuilder(
-          future: snapshot.data![itemid],
+          future: snapshot.data![itemId],
           builder: (context, AsyncSnapshot<ItemModel?> itemSnapshot) {
             if (!itemSnapshot.hasData) {
-              return Text('Still loading item $itemid');
+              return Text('Still loading item $itemId');
             }
 
-            return Text(itemSnapshot.data!.title!);
+            return buildTile(itemSnapshot.data!);
           },
         );
       },
