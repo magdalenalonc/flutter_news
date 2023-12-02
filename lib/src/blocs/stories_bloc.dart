@@ -36,6 +36,10 @@ class StoriesBloc {
     return null;
   }
 
+  clearCache() {
+    return _repository.clearCache();
+  }
+
   _itemsTransformer() {
     // from RxDart
     return ScanStreamTransformer(
