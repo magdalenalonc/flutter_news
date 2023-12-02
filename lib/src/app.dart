@@ -13,7 +13,13 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'News!',
         theme: kTheme,
-        home: const NewsList(),
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(
+            builder: (context) {
+              return const NewsList();
+            },
+          );
+        },
       ),
     );
   }
