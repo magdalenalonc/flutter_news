@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../models/item_model.dart';
@@ -10,7 +11,7 @@ class NewsListTile extends StatelessWidget {
 
   final int itemId;
 
-  Widget buildTile(ItemModel item) {
+  Widget buildTile(BuildContext context, ItemModel item) {
     return Column(
       children: [
         ListTile(
@@ -22,6 +23,9 @@ class NewsListTile extends StatelessWidget {
               Text('${item.descendants}'),
             ],
           ),
+          onTap: () {
+            Navigator.pushNamed(context, '/${item.id}');
+          },
         ),
         const Divider(height: 8.0),
       ],
@@ -46,7 +50,7 @@ class NewsListTile extends StatelessWidget {
               return const LoadingContainer();
             }
 
-            return buildTile(itemSnapshot.data!);
+            return buildTile(context, itemSnapshot.data!);
           },
         );
       },
