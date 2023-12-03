@@ -42,9 +42,8 @@ class StoriesBloc {
 
   _itemsTransformer() {
     // from RxDart
-    return ScanStreamTransformer(
-      (Map<int, Future<ItemModel?>> cache, int id, index) {
-        print(index);
+    return ScanStreamTransformer<int, Map<int, Future<ItemModel?>>>(
+      (cache, int id, index) {
         cache[id] = _repository.fetchItem(id);
         return cache;
       },
