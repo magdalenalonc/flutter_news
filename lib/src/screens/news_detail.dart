@@ -27,10 +27,25 @@ class NewsDetail extends StatelessWidget {
               return const Text('Loading item...');
             }
 
-            return Text(itemSnapshot.data!.title!);
+            return buildTitle(itemSnapshot.data!);
           },
         );
       },
+    );
+  }
+
+  Widget buildTitle(ItemModel item) {
+    return Container(
+      margin: const EdgeInsets.all(16.0),
+      alignment: Alignment.topCenter,
+      child: Text(
+        item.title!,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
