@@ -15,6 +15,21 @@ class Comment extends StatelessWidget {
   final Map<int, Future<ItemModel?>> itemMap;
   final int depth;
 
+  Widget buildText(ItemModel item) {
+    final text = item.text!
+        .replaceAll('&#x27;', "'")
+        .replaceAll('<p>', '\n\n')
+        .replaceAll('</p>', '')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#x3A;', ':')
+        .replaceAll('&#x2F;', '/')
+        .replaceAll('&#x3F;', '?');
+
+    return Text(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -27,7 +42,7 @@ class Comment extends StatelessWidget {
         final item = snapshot.data!;
         final children = <Widget>[
           ListTile(
-            title: Text(item.text!),
+            title: buildText(item),
             subtitle: item.by == '' ? const Text('Deleted') : Text(item.by!),
             contentPadding: EdgeInsets.only(
               right: 16.0,
