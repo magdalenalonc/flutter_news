@@ -5,7 +5,10 @@ final kTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan.shade800),
   textTheme: TextTheme(
     titleLarge: GoogleFonts.pressStart2p(
-      fontSize: 25,
+      fontSize: 24,
+    ),
+    bodyLarge: GoogleFonts.heebo(
+      fontSize: 14,
     ),
   ),
   appBarTheme: AppBarTheme(
