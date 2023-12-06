@@ -22,7 +22,7 @@ class NewsList extends StatelessWidget {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               bloc.fetchItem(snapshot.data![index]);
-          
+
               return NewsListTile(
                 itemId: snapshot.data![index],
               );
@@ -36,9 +36,6 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = StoriesProvider.of(context);
-
-    // THIS IS BAD!!! NORMALLY DON'T DO THIS. TEMPORARY SOLUTION.
-    bloc.fetchTopIds();
 
     return Scaffold(
       appBar: AppBar(
